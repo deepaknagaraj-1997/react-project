@@ -1,4 +1,4 @@
-name: Deploy
+name: Using Expressions in Workflow to Control Deployment
 
 on:
   push:
@@ -22,7 +22,11 @@ jobs:
 
       - name: Run lint  # Step to run linting
         run: npm run lint  # Run linting using npm script
-        
+      
+      - name: Github Ref
+        run: |
+          echo "ref: ${{github.ref}}"
+          echo "github.event.pull_request.merged: ${{github.event.pull_request.merged}}"
   deploy:
     needs: build
     runs-on: ubuntu-latest
