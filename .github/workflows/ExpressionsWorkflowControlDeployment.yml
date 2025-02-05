@@ -28,6 +28,8 @@ jobs:
         run: |
           echo "ref: ${{github.ref}}"
           echo "event: ${{ github.event.pull_request }}"
+          echo "github.head_ref ${{github.head_ref}}"
+          echo "github.head_ref ${{github.head_ref}}"
   deploy:
     needs: build
     runs-on: ubuntu-latest
