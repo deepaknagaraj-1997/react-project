@@ -1,6 +1,7 @@
 name: Using Expressions in Workflow to Control Deployment
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
