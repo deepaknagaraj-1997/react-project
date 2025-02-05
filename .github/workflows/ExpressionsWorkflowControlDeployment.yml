@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository  # Step to checkout the repository code
+        uses: actions/checkout@v4.2.2  # Use the checkout action version 4.2.2
+
+      - name: Set up Node.js  # Step to set up Node.js environment
+        uses: actions/setup-node@v4.2.0  # Use the setup-node action version 4.2.0
+        with:
+          node-version: '23'  # Specify the Node.js version to use
+
+      - name: Install dependencies  # Step to install Node.js dependencies
+        run: npm install  # Install dependencies using npm
+
+      - name: Run lint  # Step to run linting
+        run: npm run lint  # Run linting using npm script
+        
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && success() && github.event.pull_request.merged == true
+    steps:
+      - name: Deploy to production
+        run: echo "Deploying to production..."
