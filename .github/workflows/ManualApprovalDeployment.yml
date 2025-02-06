@@ -15,78 +15,18 @@ jobs:
     
  hold:
    needs: test
-   Working
- 
-Hi Karthika, i have doubt in assignment 3 that is
-Manual Approval Deployment Workflow
- 
-do we need to write workflow like any reviewer approval for the deployment job
- 
-yeah deepak
- 
-I am trying create workflow for that we need to use action from marketplace right?
- 
-yes
- 
-i used 
-trstringer/manual-approval@v1
-
-but i am getting error for approval
-
- 
-did u add secrets 
- 
-approver 
- 
- 
-steps:
-     - name: Manual approval
+   runs-on: ubuntu-latest
+   steps:
+     - name: Await manual approval
        uses: trstringer/manual-approval@v1
        with:
-         secret: ${{ github.TOKEN }}
-         approvers: 'deepaknrevier'  # Replace with actual GitHub usernames
-This is the code which i used
+         secret: ${{ secrets.GITHUB_TOKEN }}
+         approvers: karthikamn
+         issue-title: "Manual approval required for workflow run ${{ github.run_id }}"
+         issue-body: |
+          Workflow is pending manual review. Respond 'approved', 'approve', 'lgtm', 'yes' to continue workflow or 'denied', 'deny', 'no' to cancel
  
- 
-issue title and body
- 
-i have added approver in env
- 
-what kind of secret key i have to use it?
- 
-secret: ${{ secrets.GITHUB_TOKEN }}
- 
-github token which i used for aws git password, same right?
- 
-GITHUB_TOKEN is a built-in, automatically generated token that enables GitHub Actions workflows
- 
-Oh ok, got it
- 
-let me try and run the code
- 
-ok
- 
- 
-i have added this code in workflow
- 
-i am getting error in the step for manual approval
- 
-is this your name in github
- 
-open issue u will see approver there
- 
-i have 2 account
- 
-deepaknagaraj-1997 (which repo contain)
-i have added deepaknsurya is the reviewer for approval
- 
-open issue is not created
- 
-same account u use
- 
-still i am getting failed
- 
-  approval:
+approval:
    needs: build
    runs-on: ubuntu-latest
    steps:
