@@ -1,0 +1,43 @@
+name: Dynamic Environment Deployment Based on Branch and Status Check
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+      - 'feature/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.2.0
+        with:
+          node-version: '23'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Check status
+        id: status-check
+        run: echo "Status checks passed"
+
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/master' && steps.status-check.outcome == 'success'
+        run: echo "Deploying to Production environment"
+
+      - name: Deploy to Staging
+        if: github.ref == 'refs/heads/dev' && steps.status-check.outcome == 'success'
+        run: echo "Deploying to Staging environment"
+
+      - name: Deploy to Feature environment
+        if: startsWith(github.ref, 'refs/heads/feature/') && steps.status-check.outcome == 'success'
+        run: echo "Deploying to Feature environment"
