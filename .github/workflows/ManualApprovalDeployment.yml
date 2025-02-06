@@ -15,16 +15,90 @@ jobs:
     
  hold:
    needs: test
+   Working
+ 
+Hi Karthika, i have doubt in assignment 3 that is
+Manual Approval Deployment Workflow
+ 
+do we need to write workflow like any reviewer approval for the deployment job
+ 
+yeah deepak
+ 
+I am trying create workflow for that we need to use action from marketplace right?
+ 
+yes
+ 
+i used 
+trstringer/manual-approval@v1
+
+but i am getting error for approval
+
+ 
+did u add secrets 
+ 
+approver 
+ 
+ 
+steps:
+     - name: Manual approval
+       uses: trstringer/manual-approval@v1
+       with:
+         secret: ${{ github.TOKEN }}
+         approvers: 'deepaknrevier'  # Replace with actual GitHub usernames
+This is the code which i used
+ 
+ 
+issue title and body
+ 
+i have added approver in env
+ 
+what kind of secret key i have to use it?
+ 
+secret: ${{ secrets.GITHUB_TOKEN }}
+ 
+github token which i used for aws git password, same right?
+ 
+GITHUB_TOKEN is a built-in, automatically generated token that enables GitHub Actions workflows
+ 
+Oh ok, got it
+ 
+let me try and run the code
+ 
+ok
+ 
+ 
+i have added this code in workflow
+ 
+i am getting error in the step for manual approval
+ 
+is this your name in github
+ 
+open issue u will see approver there
+ 
+i have 2 account
+ 
+deepaknagaraj-1997 (which repo contain)
+i have added deepaknsurya is the reviewer for approval
+ 
+open issue is not created
+ 
+same account u use
+ 
+still i am getting failed
+ 
+  approval:
+   needs: build
    runs-on: ubuntu-latest
    steps:
-     - name: Manual approval
-       uses: trstringer/manual-approval@v1.9.0
+     - name: Await manual approval
+       uses: trstringer/manual-approval@v1
        with:
-         approvers: 'deepaknagaraj-1997'
          secret: ${{ secrets.GITHUB_TOKEN }}
-         minimum-approvals: 1
-         issue-title: "Deploying v1.3.5 to prod from staging"
-         issue-body: "Please approve or deny the deployment of version v1.3.5."
+         approvers: deepaknagaraj-1997
+         issue-title: "Manual approval required for workflow run ${{ github.run_id }}"
+         issue-body: |
+          Workflow is pending manual review. Respond 'approved', 'approve', 'lgtm', 'yes' to continue workflow or 'denied', 'deny', 'no' to cancel
+ 
 
  deploy:
    needs: hold
