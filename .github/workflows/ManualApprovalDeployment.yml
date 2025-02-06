@@ -1,0 +1,32 @@
+name: Manual Approval Deployment Workflow
+
+on:
+ push:
+   branches:
+     - dev
+
+jobs:
+ test:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Run tests
+       run: |
+         echo "Running tests..."
+    
+ hold:
+   needs: test
+   runs-on: ubuntu-latest
+   steps:
+     - name: Manual approval
+       uses: trstringer/manual-approval@v1.9.0
+       with:
+         approvers: 'deepaknsurya'  # Replace with actual GitHub usernames
+
+ deploy:
+   needs: hold
+   runs-on: ubuntu-latest
+   steps:
+     - name: Deploy to staging
+       run: |
+         echo "Deploying to staging..."
+         # Add your deployment commands here
