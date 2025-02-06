@@ -3,7 +3,7 @@ name: Manual Approval Deployment Workflow
 on:
  push:
    branches:
-     - dev
+     - dev 
 
 jobs:
  test:
