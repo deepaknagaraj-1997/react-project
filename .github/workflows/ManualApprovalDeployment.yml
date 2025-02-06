@@ -21,19 +21,6 @@ jobs:
        uses: trstringer/manual-approval@v1
        with:
          secret: ${{ secrets.GITHUB_TOKEN }}
-         approvers: karthikamn
-         issue-title: "Manual approval required for workflow run ${{ github.run_id }}"
-         issue-body: |
-          Workflow is pending manual review. Respond 'approved', 'approve', 'lgtm', 'yes' to continue workflow or 'denied', 'deny', 'no' to cancel
- 
-approval:
-   needs: build
-   runs-on: ubuntu-latest
-   steps:
-     - name: Await manual approval
-       uses: trstringer/manual-approval@v1
-       with:
-         secret: ${{ secrets.GITHUB_TOKEN }}
          approvers: deepaknagaraj-1997
          issue-title: "Manual approval required for workflow run ${{ github.run_id }}"
          issue-body: |
