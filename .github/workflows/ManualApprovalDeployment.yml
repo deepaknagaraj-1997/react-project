@@ -18,10 +18,16 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      - name: Manual approval
-       uses: trstringer/manual-approval@v1
+       uses: trstringer/manual-approval@v1.9.0
        with:
-         secret: ${{ secrets.GITHUB_TOKEN }}
-         approvers: 'deepaknsurya'  # Replace with actual GitHub usernames
+         approvers: 'deepaknsurya'
+         secret: ${{ github.TOKEN }}
+         minimum-approvals: 1
+         issue-title: "Deploying v1.3.5 to prod from staging"
+         issue-body: "Please approve or deny the deployment of version v1.3.5."
+         exclude-workflow-initiator-as-approver: false
+         additional-approved-words: ''
+         additional-denied-words: ''
 
  deploy:
    needs: hold
