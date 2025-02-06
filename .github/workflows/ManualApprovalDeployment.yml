@@ -18,9 +18,9 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      - name: Manual approval
-       uses: trstringer/manual-approval@v1.9.0
+       uses: trstringer/manual-approval@v1
        with:
-         secret: ${{ github.TOKEN }}
+         secret: ${{ secrets.GITHUB_TOKEN }}
          approvers: 'deepaknsurya'  # Replace with actual GitHub usernames
 
  deploy:
